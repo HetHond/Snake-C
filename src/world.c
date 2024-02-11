@@ -10,8 +10,8 @@ void initializeWorld(struct World *world, int width, int height) {
   world->width = width;
   world->height = height;
 
-  int snakeX = width/2-1;
-  int snakeY = height/2;
+  int snakeX = width / 2 - 1;
+  int snakeY = height / 2;
   int snakeDir = 1;
 
   initializeSnake(&world->snake, snakeX, snakeY, snakeDir);
@@ -29,9 +29,8 @@ void shuffleFood(struct World *world) {
 void updateWorld(struct World *world) {
   // check if the snake should die
   struct Snake *snake = &world->snake;
-  if (snake->x >= world->width || snake->x < 0 ||
-      snake->y >= world->height || snake->y < 0 ||
-      insideSnake(snake, snake->x, snake->y)) {
+  if (snake->x >= world->width || snake->x < 0 || snake->y >= world->height ||
+      snake->y < 0 || insideSnake(snake, snake->x, snake->y)) {
     world->gameover = 1;
     return;
   }

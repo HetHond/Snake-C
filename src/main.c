@@ -59,7 +59,8 @@ void initializeScreen() {
   int screenWidth, screenHeight;
   getmaxyx(stdscr, screenHeight, screenWidth);
 
-  int winWidth = context.world.width * 2 + 2, winHeight = context.world.height + 2;
+  int winWidth = context.world.width * 2 + 2,
+      winHeight = context.world.height + 2;
   context.window = newwin(winHeight, winWidth, screenHeight / 2 - winHeight / 2,
                           screenWidth / 2 - winWidth / 2);
   refresh();
@@ -86,6 +87,17 @@ void updateGame() {
     shouldQuit = 1;
 }
 
+void cleanup() {
+  struct SnakeSegment *current = context.world.snake.body;
+  struct SnakeSegment *previous = NULL;
+  while (current != NULL) {
+    previous = current;
+    current = current->next;
+    free(previous);
+  }
+  // delwin(context.window);
+}
+
 int main() {
   int worldWidth = 10, worldHeight = 10;
 
@@ -93,12 +105,16 @@ int main() {
   initializeWorld(&context.world, worldWidth, worldHeight);
   initializeScreen();
 
-  while (!shouldQuit) {
+  while (true) {
     updateGame();
+    if (shouldQuit)
+      break;
+
     drawGame();
     sleep(175);
   }
 
+  cleanup();
   endwin();
   return 0;
 }

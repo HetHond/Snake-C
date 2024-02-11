@@ -1,7 +1,7 @@
 #include "snake.h"
-#include <stdlib.h>
-#include <stdio.h>
 #include <ncurses.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 void initializeSegment(struct SnakeSegment *self, int x, int y) {
   self->x = x;
@@ -57,7 +57,8 @@ void destroySnake(struct Snake *snake) {
 };
 
 void insertSegment(struct Snake *snake) {
-  struct SnakeSegment* segment = (struct SnakeSegment*) malloc(sizeof(struct SnakeSegment));
+  struct SnakeSegment *segment =
+      (struct SnakeSegment *)malloc(sizeof(struct SnakeSegment));
 
   struct SnakeSegment *current = snake->body;
   while (current->next != NULL)
@@ -69,18 +70,18 @@ void insertSegment(struct Snake *snake) {
 };
 
 void switchDir(struct Snake *snake, enum Direction dir) {
-    if (dir % 2 != snake->dir % 2)
-      snake->dir = dir;
+  if (dir % 2 != snake->dir % 2)
+    snake->dir = dir;
 };
 
 int insideSnake(struct Snake *snake, int x, int y) {
-    struct SnakeSegment *segment = snake->body;
-    while (segment != NULL) {
-      if (segment->x == x && segment->y == y)
-        return 1;
-      segment = segment->next;
-    }
-    return 0;
+  struct SnakeSegment *segment = snake->body;
+  while (segment != NULL) {
+    if (segment->x == x && segment->y == y)
+      return 1;
+    segment = segment->next;
+  }
+  return 0;
 };
 
 void updateSnake(struct Snake *snake) {
@@ -102,7 +103,7 @@ void updateSnake(struct Snake *snake) {
   }
 
   // move snake body
-  struct SnakeSegment* segment = snake->body;
+  struct SnakeSegment *segment = snake->body;
   while (segment != NULL) {
     int tmpX = segment->x, tmpY = segment->y;
 
@@ -116,15 +117,15 @@ void updateSnake(struct Snake *snake) {
   }
 };
 
-void drawSnake(WINDOW* window, struct Snake *snake) {
+void drawSnake(WINDOW *window, struct Snake *snake) {
   // draw snake head
   wattron(window, COLOR_PAIR(1));
 
-  mvwprintw(window, snake->y+1, snake->x*2+1, "()");
+  mvwprintw(window, snake->y + 1, snake->x * 2 + 1, "()");
   // draw snake body
-  struct SnakeSegment* segment = snake->body;
+  struct SnakeSegment *segment = snake->body;
   while (segment != NULL) {
-    mvwprintw(window, segment->y+1, segment->x*2+1, "[]");
+    mvwprintw(window, segment->y + 1, segment->x * 2 + 1, "[]");
     segment = segment->next;
   }
   wattroff(window, COLOR_PAIR(1));

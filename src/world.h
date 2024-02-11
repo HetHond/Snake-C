@@ -1,8 +1,8 @@
 #ifndef WORLD_H
 #define WORLD_H
 
-#include <ncurses.h>
 #include "snake.h"
+#include <ncurses.h>
 
 struct World {
   int width, height;
@@ -11,10 +11,10 @@ struct World {
   int gameover;
 };
 
-void initializeWorld(struct World*, int, int);
-void shuffleFood(struct World*);
+void initializeWorld(struct World *, int, int);
+void shuffleFood(struct World *);
 
-void updateWorld(struct World*);
-void drawWorld(WINDOW* window, struct World*);
+void updateWorld(struct World *);
+void drawWorld(WINDOW *window, struct World *);
 
 #endif

@@ -16,15 +16,15 @@ struct Snake {
   struct SnakeSegment *body;
 };
 
-void initializeSegment(struct SnakeSegment*, int, int);
-void initializeSnake(struct Snake*, int, int, enum Direction);
-void destroySnake(struct Snake*);
+void initializeSegment(struct SnakeSegment *, int, int);
+void initializeSnake(struct Snake *, int, int, enum Direction);
+void destroySnake(struct Snake *);
 
-void insertSegment(struct Snake*);
-void switchDir(struct Snake*, enum Direction);
-int insideSnake(struct Snake*, int, int);
+void insertSegment(struct Snake *);
+void switchDir(struct Snake *, enum Direction);
+int insideSnake(struct Snake *, int, int);
 
-void updateSnake(struct Snake*);
-void drawSnake(WINDOW* window, struct Snake*);
+void updateSnake(struct Snake *);
+void drawSnake(WINDOW *window, struct Snake *);
 
 #endif
