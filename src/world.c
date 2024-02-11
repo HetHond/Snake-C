@@ -43,5 +43,7 @@ void updateWorld(struct World *world) {
 };
 
 void drawWorld(WINDOW *window, struct World *world) {
+  wattron(window, COLOR_PAIR(2));
   mvwprintw(window, world->fruitY + 1, world->fruitX * 2 + 1, "fr");
+  wattroff(window, COLOR_PAIR(2));
 };

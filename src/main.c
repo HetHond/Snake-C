@@ -45,6 +45,16 @@ int main() {
   initializeWorld(&state.world, worldWidth, worldHeight);
   
   initscr();
+  // initialize color terminal
+  if (!has_colors()) {
+    endwin();
+    printf("Your terminal does not support color.\n");
+    return 1;
+  }
+  start_color();
+  init_pair(2, COLOR_RED, COLOR_BLACK);
+  init_pair(1, COLOR_GREEN, COLOR_BLACK);
+
   noecho();        // Don't echo any keypresses
   curs_set(FALSE); // Don't display a cursor
   nodelay(stdscr, TRUE); // stdscr is the default window provided by ncurses
@@ -58,6 +68,7 @@ int main() {
   refresh();
   
   int ch = 0;
+int ch = 0;
   while (ch != 'q') {
     // window stuff
     wclear(win);

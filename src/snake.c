@@ -118,12 +118,14 @@ void updateSnake(struct Snake *snake) {
 
 void drawSnake(WINDOW* window, struct Snake *snake) {
   // draw snake head
-  mvwprintw(window, snake->y+1, snake->x*2+1, "()");
+  wattron(window, COLOR_PAIR(1));
 
+  mvwprintw(window, snake->y+1, snake->x*2+1, "()");
   // draw snake body
   struct SnakeSegment* segment = snake->body;
   while (segment != NULL) {
     mvwprintw(window, segment->y+1, segment->x*2+1, "[]");
     segment = segment->next;
   }
+  wattroff(window, COLOR_PAIR(1));
 };
