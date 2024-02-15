@@ -1,4 +1,3 @@
-#include <ncurses.h>
 #include <stdlib.h>
 
 #include "snake.h"
@@ -27,6 +26,12 @@ void shuffleFood(struct World *world) {
 };
 
 void updateWorld(struct World *world) {
+  if (world->gameover) {
+    return;
+  }
+
+  updateSnake(&world->snake);
+
   // check if the snake should die
   struct Snake *snake = &world->snake;
   if (snake->x >= world->width || snake->x < 0 || snake->y >= world->height ||
@@ -39,10 +44,4 @@ void updateWorld(struct World *world) {
     insertSegment(snake);
     shuffleFood(world);
   }
-};
-
-void drawWorld(WINDOW *window, struct World *world) {
-  wattron(window, COLOR_PAIR(2));
-  mvwprintw(window, world->fruitY + 1, world->fruitX * 2 + 1, "fr");
-  wattroff(window, COLOR_PAIR(2));
 };

@@ -1,5 +1,5 @@
 #include "snake.h"
-#include <ncurses.h>
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -12,6 +12,7 @@ void initializeSnake(struct Snake *snake, int initX, int initY,
                      enum Direction initDir) {
   snake->x = initX;
   snake->y = initY;
+  snake->newDir = -1;
   snake->dir = initDir;
 
   // Allocate memory for the initial body segment
@@ -22,8 +23,6 @@ void initializeSnake(struct Snake *snake, int initX, int initY,
     exit(EXIT_FAILURE);
   }
 
-  // Position the initial body segment
-  // This example places the segment directly behind the snake's head
   initialSegment->x = initX;
   initialSegment->y = initY;
   switch (initDir) {
@@ -70,8 +69,8 @@ void insertSegment(struct Snake *snake) {
 };
 
 void switchDir(struct Snake *snake, enum Direction dir) {
-  if (dir % 2 != snake->dir % 2)
-    snake->dir = dir;
+  if (snake->newDir < 0 && dir % 2 != snake->dir % 2)
+    snake->newDir = dir;
 };
 
 int insideSnake(struct Snake *snake, int x, int y) {
@@ -85,6 +84,11 @@ int insideSnake(struct Snake *snake, int x, int y) {
 };
 
 void updateSnake(struct Snake *snake) {
+  if (snake->newDir >= 0) {
+    snake->dir = snake->newDir;
+    snake->newDir = -1;
+  }
+
   // move snake head
   int lastX = snake->x, lastY = snake->y;
   switch (snake->dir) {
@@ -99,6 +103,8 @@ void updateSnake(struct Snake *snake) {
     break;
   case LEFT:
     snake->x -= 1;
+    break;
+  default:
     break;
   }
 
@@ -115,18 +121,4 @@ void updateSnake(struct Snake *snake) {
 
     segment = segment->next;
   }
-};
-
-void drawSnake(WINDOW *window, struct Snake *snake) {
-  // draw snake head
-  wattron(window, COLOR_PAIR(1));
-
-  mvwprintw(window, snake->y + 1, snake->x * 2 + 1, "()");
-  // draw snake body
-  struct SnakeSegment *segment = snake->body;
-  while (segment != NULL) {
-    mvwprintw(window, segment->y + 1, segment->x * 2 + 1, "[]");
-    segment = segment->next;
-  }
-  wattroff(window, COLOR_PAIR(1));
 };

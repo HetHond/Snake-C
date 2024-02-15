@@ -1,7 +1,7 @@
 #ifndef SNAKE_H
 #define SNAKE_H
 
-#include <ncurses.h>
+// TODO: maybe use booleans
 
 struct SnakeSegment {
   int x, y;
@@ -12,6 +12,7 @@ enum Direction { UP, RIGHT, DOWN, LEFT };
 
 struct Snake {
   int x, y;
+  signed int newDir;
   enum Direction dir;
   struct SnakeSegment *body;
 };
@@ -25,6 +26,5 @@ void switchDir(struct Snake *, enum Direction);
 int insideSnake(struct Snake *, int, int);
 
 void updateSnake(struct Snake *);
-void drawSnake(WINDOW *window, struct Snake *);
 
 #endif
