@@ -2,7 +2,7 @@ TARGET := snake
 
 CC := clang
 CFLAGS =
-LDFLAGS := -lSDL2 # Not sure if this is supposed to be put here but it works
+LDFLAGS := -lSDL2
 
 SRC_DIR := src
 SOURCES := $(wildcard $(SRC_DIR)/*.c)
